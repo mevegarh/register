@@ -1,6 +1,7 @@
-  // --- State Infrastructure ---
-    let teacherData = JSON.parse(localStorage.getItem('themeTeacherData')) || null;
-    let students = JSON.parse(localStorage.getItem('themeStudents')) || [];
+
+    // --- State Infrastructure ---
+    let teacherData = JSON.parse(localStorage.getItem('responsiveTeacherData')) || null;
+    let students = JSON.parse(localStorage.getItem('responsiveStudents')) || [];
     let currentDate = new Date(); 
 
     // --- DOM Elements ---
@@ -24,7 +25,7 @@
         className: document.getElementById('class-name').value,
         phone: document.getElementById('phone-number').value
       };
-      localStorage.setItem('themeTeacherData', JSON.stringify(teacherData));
+      localStorage.setItem('responsiveTeacherData', JSON.stringify(teacherData));
       showRegisterScreen();
     });
 
@@ -54,11 +55,9 @@
         </th>
       `;
       
-      // Keep track of which indices are Sundays so rows can match style
       const sundayMap = [];
 
       for (let day = 1; day <= totalDays; day++) {
-        // Javascript day checking: 0 = Sunday
         const isSunday = new Date(year, month, day).getDay() === 0;
         sundayMap.push(isSunday);
 
@@ -76,7 +75,6 @@
           const dateKey = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
           const isChecked = student.attendance && student.attendance[dateKey] ? 'checked' : '';
           
-          // Apply custom column coloring structural style if it maps to Sunday
           const tdClass = sundayMap[day - 1] ? 'class="sunday-cell"' : '';
           
           rowHtml += `
@@ -100,7 +98,7 @@
           attendance: {}
         };
         students.push(newStudent);
-        localStorage.setItem('themeStudents', JSON.stringify(students));
+        localStorage.setItem('responsiveStudents', JSON.stringify(students));
         renderRegister();
       }
     }
@@ -113,7 +111,7 @@
         }
         return student;
       });
-      localStorage.setItem('themeStudents', JSON.stringify(students));
+      localStorage.setItem('responsiveStudents', JSON.stringify(students));
     }
 
     function changeMonth(offset) {

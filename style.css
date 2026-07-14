@@ -16,27 +16,42 @@
       --sunday-text: #dc2626;
     }
 
-    /* --- Base Reset --- */
+    /* --- Base Reset & Responsiveness --- */
+    * {
+      box-sizing: border-box;
+    }
     body {
       font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
       background-color: var(--bg);
       margin: 0;
-      padding: 30px 20px;
+      padding: 15px;
       color: var(--text-main);
+    }
+    @media (min-width: 768px) {
+      body {
+        padding: 30px 20px;
+      }
     }
     .hidden {
       display: none !important;
     }
 
-    /* --- Beautiful Glassmorphism Cards --- */
+    /* --- Beautiful Responsive Cards --- */
     .card {
       background: var(--card-bg);
-      padding: 40px;
+      padding: 25px 20px;
       border-radius: 16px;
       box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
       border: 1px solid var(--border);
+      width: 100%;
       max-width: 420px;
-      margin: 60px auto;
+      margin: 30px auto;
+    }
+    @media (min-width: 768px) {
+      .card {
+        padding: 40px;
+        margin: 60px auto;
+      }
     }
     .card h2 {
       margin-top: 0;
@@ -59,7 +74,6 @@
       margin: 8px 0 24px 0;
       border: 1px solid var(--border);
       border-radius: 8px;
-      box-sizing: border-box;
       font-size: 1rem;
       transition: all 0.2s;
       background-color: #fff;
@@ -83,46 +97,73 @@
       transition: all 0.2s;
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 8px;
     }
     button:hover {
       background-color: var(--primary-hover);
-      transform: translateY(-1px);
     }
-    button:active {
-      transform: translateY(0);
+    #login-form button {
+      width: 100%;
     }
 
-    /* --- Register Dashboard Dashboard Layout --- */
+    /* --- Register Dashboard Layout --- */
     #register-screen {
+      width: 100%;
       max-width: 1400px;
       margin: 0 auto;
       background: var(--card-bg);
-      padding: 30px;
+      padding: 15px;
       border-radius: 16px;
       box-shadow: 0 4px 20px rgba(0,0,0,0.03);
       border: 1px solid var(--border);
     }
+    @media (min-width: 768px) {
+      #register-screen {
+        padding: 30px;
+      }
+    }
+    
     .header-bar {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
+      flex-direction: column;
+      gap: 15px;
       border-bottom: 1px solid var(--border);
       padding-bottom: 20px;
       margin-bottom: 25px;
     }
+    @media (min-width: 640px) {
+      .header-bar {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+      }
+    }
     .header-bar h2 {
       margin: 0 0 6px 0;
-      font-size: 1.75rem;
+      font-size: 1.5rem;
       font-weight: 700;
     }
+    @media (min-width: 768px) {
+      .header-bar h2 {
+        font-size: 1.75rem;
+      }
+    }
+    
     .month-nav {
-      display: inline-flex;
+      display: flex;
       align-items: center;
+      justify-content: space-between;
       background: #f1f5f9;
       padding: 6px;
       border-radius: 10px;
       border: 1px solid var(--border);
+      width: 100%;
+    }
+    @media (min-width: 640px) {
+      .month-nav {
+        width: auto;
+      }
     }
     .month-nav button {
       background-color: transparent;
@@ -136,17 +177,20 @@
     }
     .month-label {
       font-weight: 700;
-      margin: 0 15px;
-      font-size: 1.05rem;
-      min-width: 140px;
+      margin: 0 10px;
+      font-size: 1rem;
+      min-width: 120px;
       text-align: center;
     }
 
-    /* --- UI Clean Tables --- */
+    /* --- UI Clean Tables & Scrolling --- */
     .table-container {
+      width: 100%;
       overflow-x: auto;
       border-radius: 12px;
       border: 1px solid var(--border);
+      /* Smooth touch scrolling momentum for iOS/Android */
+      -webkit-overflow-scrolling: touch; 
     }
     table {
       width: 100%;
@@ -156,30 +200,44 @@
     th, td {
       border-bottom: 1px solid var(--border);
       border-right: 1px solid #f1f5f9;
-      padding: 14px 10px;
+      padding: 10px 6px;
       text-align: center;
-      font-size: 0.95rem;
+      font-size: 0.85rem;
+    }
+    @media (min-width: 768px) {
+      th, td {
+        padding: 14px 10px;
+        font-size: 0.95rem;
+      }
     }
     th {
       background-color: #f8fafc;
       color: var(--text-muted);
       font-weight: 600;
-      font-size: 0.85rem;
       text-transform: uppercase;
       letter-spacing: 0.05em;
     }
     
-    /* Lock/Freeze Student Column */
+    /* Lock/Freeze Student Column Responsively */
     td:first-child, th:first-child {
       position: sticky;
       left: 0;
       background-color: #fff;
       z-index: 2;
       text-align: left;
-      min-width: 200px;
+      min-width: 130px;
+      max-width: 180px;
       font-weight: 600;
       border-right: 2px solid var(--border);
-      box-shadow: 4px 0 8px -4px rgba(0,0,0,0.05);
+      box-shadow: 4px 0 8px -4px rgba(0,0,0,0.08);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    @media (min-width: 768px) {
+      td:first-child, th:first-child {
+        min-width: 200px;
+      }
     }
     th:first-child {
       background-color: #f8fafc;
@@ -189,7 +247,7 @@
       background-color: #f8fafc;
     }
     tr:hover td:first-child {
-      background-color: #fff; /* Keeps frozen block clean */
+      background-color: #fff;
     }
 
     /* --- Sunday Dynamic Formatting --- */
@@ -201,23 +259,26 @@
     .sunday-cell {
       background-color: var(--sunday-bg) !important;
     }
-    .sunday-cell input[type="checkbox"] {
-      outline: 2px solid rgba(220, 38, 38, 0.2);
-    }
 
     /* --- Control Components --- */
     .add-btn {
       background-color: var(--success);
-      font-size: 0.8rem;
-      padding: 6px 12px;
-      margin-top: 8px;
+      font-size: 0.75rem;
+      padding: 6px 10px;
+      margin-top: 6px;
       border-radius: 6px;
+      white-space: nowrap;
     }
     .add-btn:hover {
       background-color: var(--success-hover);
     }
     input[type="checkbox"] {
-      transform: scale(1.25);
+      transform: scale(1.1);
       cursor: pointer;
       accent-color: var(--primary);
+    }
+    @media (min-width: 768px) {
+      input[type="checkbox"] {
+        transform: scale(1.25);
+      }
     }
