@@ -8,19 +8,16 @@
 </head>
 <body>
 
-  <!-- PAGE 1: TEACHER LOGIN/SETUP -->
+  <!-- PAGE 1: SETUP -->
   <div id="login-screen" class="card">
     <h2>Teacher Setup</h2>
     <form id="login-form">
       <label>Teacher Name</label>
       <input type="text" id="teacher-name" required placeholder="e.g., Jane Doe">
-
       <label>Class / Grade</label>
       <input type="text" id="class-name" required placeholder="e.g., Grade 12-C">
-
       <label>Phone Number</label>
-      <input type="tel" id="phone-number" required placeholder="e.g., (555) 000-1234">
-
+      <input type="tel" id="phone-number" required placeholder="e.g., 555-0123">
       <button type="submit">Create Register →</button>
     </form>
   </div>
@@ -32,8 +29,6 @@
         <h2 id="display-class">Class</h2>
         <p id="display-teacher" style="color: var(--text-muted); margin: 0; font-size: 0.9rem;"></p>
       </div>
-
-      <!-- Month Navigation Controls -->
       <div class="month-nav">
         <button onclick="changeMonth(-1)">◀</button>
         <span id="month-label" class="month-label">July 2026</span>
@@ -41,17 +36,33 @@
       </div>
     </div>
 
+    <!-- Live Status Update Area -->
+    <div id="sms-status-bar" class="hidden">
+      <span>📡</span> <span id="status-text">System Active. Waiting for check-ins...</span>
+    </div>
+
     <div class="table-container">
       <table id="register-table">
-        <thead>
-          <tr id="table-headers">
-            <!-- Dynamically populated -->
-          </tr>
-        </thead>
-        <tbody id="table-body">
-          <!-- Dynamically populated -->
-        </tbody>
+        <thead><tr id="table-headers"></tr></thead>
+        <tbody id="table-body"></tbody>
       </table>
+    </div>
+  </div>
+
+  <!-- MODAL: ADD STUDENT -->
+  <div id="student-modal" class="modal-overlay hidden">
+    <div class="modal-content">
+      <h3>Add New Student</h3>
+      <form id="student-form">
+        <label>Student Name</label>
+        <input type="text" id="student-name-input" required placeholder="e.g. John Miller">
+        <label>Parent's Phone Number (Include Country Code)</label>
+        <input type="tel" id="student-phone-input" required placeholder="e.g. +15550199">
+        <div class="modal-actions">
+          <button type="button" class="cancel-btn" onclick="closeModal()">Cancel</button>
+          <button type="submit">Add Student</button>
+        </div>
+      </form>
     </div>
   </div>
 

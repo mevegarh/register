@@ -1,4 +1,4 @@
-    /* --- Modern Designer Theme Variables --- */
+    /* --- Designer Theme Variables --- */
     :root {
       --primary: #4f46e5;
       --primary-hover: #4338ca;
@@ -10,63 +10,47 @@
       --text-muted: #64748b;
       --border: #e2e8f0;
       
-      /* Sunday Accent Colors */
+      /* Sunday Colors */
       --sunday-bg: #fef2f2;
       --sunday-header: #fee2e2;
       --sunday-text: #dc2626;
     }
 
-    /* --- Base Reset & Responsiveness --- */
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
     body {
-      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      font-family: 'Segoe UI', Roboto, sans-serif;
       background-color: var(--bg);
       margin: 0;
       padding: 15px;
       color: var(--text-main);
     }
     @media (min-width: 768px) {
-      body {
-        padding: 30px 20px;
-      }
+      body { padding: 30px 20px; }
     }
-    .hidden {
-      display: none !important;
-    }
+    .hidden { display: none !important; }
 
-    /* --- Beautiful Responsive Cards --- */
+    /* --- Setup Card --- */
     .card {
       background: var(--card-bg);
       padding: 25px 20px;
       border-radius: 16px;
-      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
       border: 1px solid var(--border);
       width: 100%;
       max-width: 420px;
       margin: 30px auto;
     }
     @media (min-width: 768px) {
-      .card {
-        padding: 40px;
-        margin: 60px auto;
-      }
+      .card { padding: 40px; margin: 60px auto; }
     }
-    .card h2 {
-      margin-top: 0;
-      font-weight: 700;
-      color: var(--text-main);
-      margin-bottom: 25px;
-    }
+    .card h2 { margin-top: 0; margin-bottom: 25px; }
 
-    /* --- Form Styling --- */
+    /* --- Forms --- */
     label {
       font-size: 0.85rem;
       font-weight: 600;
       color: var(--text-muted);
       text-transform: uppercase;
-      letter-spacing: 0.05em;
     }
     input[type="text"], input[type="tel"] {
       width: 100%;
@@ -75,16 +59,8 @@
       border: 1px solid var(--border);
       border-radius: 8px;
       font-size: 1rem;
-      transition: all 0.2s;
-      background-color: #fff;
-    }
-    input[type="text"]:focus, input[type="tel"]:focus {
-      outline: none;
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
     }
 
-    /* --- Interactive Buttons --- */
     button {
       background-color: var(--primary);
       color: white;
@@ -93,21 +69,15 @@
       border-radius: 8px;
       cursor: pointer;
       font-weight: 600;
-      font-size: 0.95rem;
-      transition: all 0.2s;
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
     }
-    button:hover {
-      background-color: var(--primary-hover);
-    }
-    #login-form button {
-      width: 100%;
-    }
+    button:hover { background-color: var(--primary-hover); }
+    #login-form button { width: 100%; }
 
-    /* --- Register Dashboard Layout --- */
+    /* --- Dashboard --- */
     #register-screen {
       width: 100%;
       max-width: 1400px;
@@ -117,11 +87,6 @@
       border-radius: 16px;
       box-shadow: 0 4px 20px rgba(0,0,0,0.03);
       border: 1px solid var(--border);
-    }
-    @media (min-width: 768px) {
-      #register-screen {
-        padding: 30px;
-      }
     }
     
     .header-bar {
@@ -139,146 +104,88 @@
         align-items: center;
       }
     }
-    .header-bar h2 {
-      margin: 0 0 6px 0;
-      font-size: 1.5rem;
-      font-weight: 700;
-    }
-    @media (min-width: 768px) {
-      .header-bar h2 {
-        font-size: 1.75rem;
-      }
-    }
     
     .month-nav {
       display: flex;
       align-items: center;
-      justify-content: space-between;
       background: #f1f5f9;
       padding: 6px;
       border-radius: 10px;
       border: 1px solid var(--border);
-      width: 100%;
-    }
-    @media (min-width: 640px) {
-      .month-nav {
-        width: auto;
-      }
-    }
-    .month-nav button {
-      background-color: transparent;
-      color: var(--text-main);
-      padding: 8px 14px;
-      font-size: 0.9rem;
-    }
-    .month-nav button:hover {
-      background-color: #fff;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
     }
     .month-label {
       font-weight: 700;
       margin: 0 10px;
-      font-size: 1rem;
       min-width: 120px;
       text-align: center;
     }
 
-    /* --- UI Clean Tables & Scrolling --- */
+    /* --- Live SMS Status Bar --- */
+    #sms-status-bar {
+      background: #e0f2fe;
+      color: #0369a1;
+      padding: 10px 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      font-weight: 600;
+      font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* --- Table Settings --- */
     .table-container {
       width: 100%;
       overflow-x: auto;
       border-radius: 12px;
       border: 1px solid var(--border);
-      /* Smooth touch scrolling momentum for iOS/Android */
-      -webkit-overflow-scrolling: touch; 
     }
     table {
       width: 100%;
       border-collapse: collapse;
-      background: white;
     }
     th, td {
       border-bottom: 1px solid var(--border);
       border-right: 1px solid #f1f5f9;
       padding: 10px 6px;
       text-align: center;
-      font-size: 0.85rem;
     }
-    @media (min-width: 768px) {
-      th, td {
-        padding: 14px 10px;
-        font-size: 0.95rem;
-      }
-    }
-    th {
-      background-color: #f8fafc;
-      color: var(--text-muted);
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
+    th { background-color: #f8fafc; color: var(--text-muted); font-size: 0.85rem; }
     
-    /* Lock/Freeze Student Column Responsively */
+    /* Sticky Name Column */
     td:first-child, th:first-child {
       position: sticky;
       left: 0;
       background-color: #fff;
       z-index: 2;
       text-align: left;
-      min-width: 130px;
-      max-width: 180px;
-      font-weight: 600;
+      min-width: 150px;
+      max-width: 220px;
       border-right: 2px solid var(--border);
       box-shadow: 4px 0 8px -4px rgba(0,0,0,0.08);
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
     }
-    @media (min-width: 768px) {
-      td:first-child, th:first-child {
-        min-width: 200px;
-      }
-    }
-    th:first-child {
-      background-color: #f8fafc;
-    }
-    
-    tr:hover td {
-      background-color: #f8fafc;
-    }
-    tr:hover td:first-child {
-      background-color: #fff;
-    }
+    th:first-child { background-color: #f8fafc; }
 
-    /* --- Sunday Dynamic Formatting --- */
-    .sunday-header {
-      background-color: var(--sunday-header) !important;
-      color: var(--sunday-text) !important;
-      font-weight: 700 !important;
-    }
-    .sunday-cell {
-      background-color: var(--sunday-bg) !important;
-    }
+    /* --- Sundays --- */
+    .sunday-header { background-color: var(--sunday-header) !important; color: var(--sunday-text) !important; }
+    .sunday-cell { background-color: var(--sunday-bg) !important; }
 
-    /* --- Control Components --- */
-    .add-btn {
-      background-color: var(--success);
-      font-size: 0.75rem;
-      padding: 6px 10px;
-      margin-top: 6px;
-      border-radius: 6px;
-      white-space: nowrap;
+    .add-btn { background-color: var(--success); font-size: 0.75rem; padding: 6px 10px; margin-top: 6px; }
+    .add-btn:hover { background-color: var(--success-hover); }
+    input[type="checkbox"] { transform: scale(1.1); cursor: pointer; }
+
+    /* --- Modal --- */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(15, 23, 42, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+      backdrop-filter: blur(2px);
     }
-    .add-btn:hover {
-      background-color: var(--success-hover);
-    }
-    input[type="checkbox"] {
-      transform: scale(1.1);
-      cursor: pointer;
-      accent-color: var(--primary);
-    }
-    @media (min-width: 768px) {
-      input[type="checkbox"] {
-        transform: scale(1.25);
-      }
-    }
+    .modal-content { background: #fff; padding: 25px; border-radius: 12px; width: 100%; max-width: 400px; }
+    .modal-actions { display: flex; justify-content: flex-end; gap: 10px; }
+    .cancel-btn { background-color: #e2e8f0; color: #334155; }
