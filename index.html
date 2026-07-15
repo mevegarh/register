@@ -36,11 +36,6 @@
       </div>
     </div>
 
-    <!-- Live Status Update Area -->
-    <div id="sms-status-bar" class="hidden">
-      <span>📡</span> <span id="status-text">System Active. Waiting for check-ins...</span>
-    </div>
-
     <div class="table-container">
       <table id="register-table">
         <thead><tr id="table-headers"></tr></thead>
@@ -56,7 +51,7 @@
       <form id="student-form">
         <label>Student Name</label>
         <input type="text" id="student-name-input" required placeholder="e.g. John Miller">
-        <label>Parent's Phone Number (Include Country Code)</label>
+        <label>Parent's Phone Number</label>
         <input type="tel" id="student-phone-input" required placeholder="e.g. +15550199">
         <div class="modal-actions">
           <button type="button" class="cancel-btn" onclick="closeModal()">Cancel</button>
@@ -65,7 +60,6 @@
       </form>
     </div>
   </div>
-
 <script src="script.js"></script>
 </body>
 </html>

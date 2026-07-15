@@ -1,5 +1,6 @@
-    let teacherData = JSON.parse(localStorage.getItem('autoTeacherData')) || null;
-    let students = JSON.parse(localStorage.getItem('autoStudents')) || [];
+
+    let teacherData = JSON.parse(localStorage.getItem('nativeTeacherData')) || null;
+    let students = JSON.parse(localStorage.getItem('nativeStudents')) || [];
     let currentDate = new Date(); 
 
     const loginScreen = document.getElementById('login-screen');
@@ -7,8 +8,6 @@
     const loginForm = document.getElementById('login-form');
     const studentModal = document.getElementById('student-modal');
     const studentForm = document.getElementById('student-form');
-    const statusBar = document.getElementById('sms-status-bar');
-    const statusText = document.getElementById('status-text');
 
     function init() {
       if (teacherData) { showRegisterScreen(); }
@@ -21,7 +20,7 @@
         className: document.getElementById('class-name').value,
         phone: document.getElementById('phone-number').value
       };
-      localStorage.setItem('autoTeacherData', JSON.stringify(teacherData));
+      localStorage.setItem('nativeTeacherData', JSON.stringify(teacherData));
       showRegisterScreen();
     });
 
@@ -59,62 +58,68 @@
         for (let day = 1; day <= totalDays; day++) {
           const dateKey = `${year}-${String(month + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
           const isChecked = student.attendance && student.attendance[dateKey] ? 'checked' : '';
-          rowHtml += `<td class="${sundayMap[day - 1] ? 'sunday-cell' : ''}"><input type="checkbox" ${isChecked} onchange="toggleAttendance(${student.id}, '${dateKey}', this.checked)"></td>`;
+          
+          rowHtml += `
+            <td class="${sundayMap[day - 1] ? 'sunday-cell' : ''}">
+              <div class="attendance-cell-container">
+                <!-- Checkbox -->
+                <input type="checkbox" id="cb-${student.id}-${dateKey}" ${isChecked} onchange="handleCheckboxChange(this, ${student.id}, '${dateKey}')">
+                
+                <!-- Linked System Link Button -->
+                <a id="btn-${student.id}-${dateKey}" href="#" class="send-sms-link" onclick="handleBtnClick(this, ${student.id}, ${isChecked ? 'true' : 'false'})">📤</a>
+              </div>
+            </td>`;
         }
         rowHtml += `</tr>`;
         tableBody.innerHTML += rowHtml;
       });
     }
 
-    // --- Background Automated Send SMS Code ---
-    function toggleAttendance(studentId, dateKey, isChecked) {
+    // --- Dynamic Link Generation ---
+    function getSmsUrl(student, isPresent) {
+      const message = isPresent 
+        ? `Your child ${student.name} came to school today. Thanks for sending your child!`
+        : `Your child ${student.name} did not come to school today. Please send your child properly to school.`;
+
+      const cleanPhone = student.phone.replace(/[\s\-\(\)]/g, '');
+      const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+      const parameterSeparator = isIOS ? '&' : '?';
+
+      return `sms:${cleanPhone}${parameterSeparator}body=${encodeURIComponent(message)}`;
+    }
+
+    // --- Triggers when Checkbox changes state ---
+    function handleCheckboxChange(checkbox, studentId, dateKey) {
+      const isChecked = checkbox.checked;
+      
+      // Update data locally
       students = students.map(student => {
         if (student.id === studentId) {
           if (!student.attendance) student.attendance = {};
           student.attendance[dateKey] = isChecked;
-          
-          // RUN AUTOMATICALLY IN BACKGROUND WITHOUT CONFIRMATIONS
-          sendSmsAutomatically(student, isChecked);
         }
         return student;
       });
-      localStorage.setItem('autoStudents', JSON.stringify(students));
+      localStorage.setItem('nativeStudents', JSON.stringify(students));
+
+      // Locate the physical button next to this checkbox
+      const sendBtn = document.getElementById(`btn-${studentId}-${dateKey}`);
+      if (sendBtn) {
+        const student = students.find(s => s.id === studentId);
+        const targetSmsUrl = getSmsUrl(student, isChecked);
+        
+        // 1. Assign the dynamically typed message URL to our button
+        sendBtn.href = targetSmsUrl;
+        
+        // 2. Automatically trigger the button click in the background!
+        sendBtn.click();
+      }
     }
 
-    function sendSmsAutomatically(student, isPresent) {
-      const message = isPresent 
-        ? `Your child ${student.name} is came to school thanks for sending your child`
-        : `Your child ${student.name} is not came to school so please send your child properly to school.`;
-
-      // 1. Show live sending status to user
-      statusBar.classList.remove('hidden');
-      statusText.innerText = `Sending automated text to ${student.name}'s parents...`;
-
-      // 2. Fire web call instantly to SMS gateway
-      fetch('https://textbelt.com/text', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams({
-          'number': student.phone.replace(/[\s\-\(\)]/g, ''), // clean raw numbers
-          'message': message,
-          'key': 'textbelt' // Standard Free Key (allows 1 text per day for live testing)
-        })
-      })
-      .then(res => res.json())
-      .then(data => {
-        if (data.success) {
-          statusText.innerText = `Success! Message sent automatically to ${student.name} (${student.phone}).`;
-          setTimeout(() => statusBar.classList.add('hidden'), 5000);
-        } else {
-          // If you hit the free tier limit
-          statusText.innerText = `Background call made, but API returned: "${data.error}"`;
-          console.warn(data.error);
-        }
-      })
-      .catch(err => {
-        statusText.innerText = `Could not connect to SMS gateway.`;
-        console.error(err);
-      });
+    // --- Backup Click Handler if they tap the icon manually ---
+    function handleBtnClick(anchor, studentId, isCurrentlyChecked) {
+      const student = students.find(s => s.id === studentId);
+      anchor.href = getSmsUrl(student, isCurrentlyChecked);
     }
 
     function openModal() { studentModal.classList.remove('hidden'); }
@@ -126,7 +131,7 @@
       const phone = document.getElementById('student-phone-input').value.trim();
       if (name && phone) {
         students.push({ id: Date.now(), name, phone, attendance: {} });
-        localStorage.setItem('autoStudents', JSON.stringify(students));
+        localStorage.setItem('nativeStudents', JSON.stringify(students));
         renderRegister();
         closeModal();
       }

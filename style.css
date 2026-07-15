@@ -120,20 +120,6 @@
       text-align: center;
     }
 
-    /* --- Live SMS Status Bar --- */
-    #sms-status-bar {
-      background: #e0f2fe;
-      color: #0369a1;
-      padding: 10px 15px;
-      border-radius: 8px;
-      margin-bottom: 20px;
-      font-weight: 600;
-      font-size: 0.9rem;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
     /* --- Table Settings --- */
     .table-container {
       width: 100%;
@@ -148,7 +134,7 @@
     th, td {
       border-bottom: 1px solid var(--border);
       border-right: 1px solid #f1f5f9;
-      padding: 10px 6px;
+      padding: 8px 4px;
       text-align: center;
     }
     th { background-color: #f8fafc; color: var(--text-muted); font-size: 0.85rem; }
@@ -173,7 +159,27 @@
 
     .add-btn { background-color: var(--success); font-size: 0.75rem; padding: 6px 10px; margin-top: 6px; }
     .add-btn:hover { background-color: var(--success-hover); }
-    input[type="checkbox"] { transform: scale(1.1); cursor: pointer; }
+    
+    /* Compact cell layout containing checkbox and invisible automatic clicker link */
+    .attendance-cell-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+    }
+    input[type="checkbox"] { transform: scale(1.1); cursor: pointer; margin: 0; }
+    
+    /* Hidden auto-link styled subtly if ever needed to be tapped manually */
+    .send-sms-link {
+      font-size: 0.75rem;
+      text-decoration: none;
+      color: var(--primary);
+      opacity: 0.7;
+      cursor: pointer;
+      user-select: none;
+    }
+    .send-sms-link:hover { opacity: 1; transform: scale(1.1); }
 
     /* --- Modal --- */
     .modal-overlay {
