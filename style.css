@@ -193,3 +193,14 @@
     .modal-content { background: #fff; padding: 25px; border-radius: 12px; width: 100%; max-width: 400px; }
     .modal-actions { display: flex; justify-content: flex-end; gap: 10px; }
     .cancel-btn { background-color: #e2e8f0; color: #334155; }
+.app-brand-footer {
+      text-align: center;
+      margin-top: auto;
+      padding: 30px 10px 15px 10px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      letter-spacing: 0.3px;
+    }
+    .app-brand-footer strong {
+      color: #334155;
+    }
