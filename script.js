@@ -1,4 +1,3 @@
-
     let teacherData = JSON.parse(localStorage.getItem('nativeTeacherData')) || null;
     let students = JSON.parse(localStorage.getItem('nativeStudents')) || [];
     let currentDate = new Date(); 
@@ -65,8 +64,8 @@
                 <!-- Checkbox -->
                 <input type="checkbox" id="cb-${student.id}-${dateKey}" ${isChecked} onchange="handleCheckboxChange(this, ${student.id}, '${dateKey}')">
                 
-                <!-- Linked System Link Button -->
-                <a id="btn-${student.id}-${dateKey}" href="#" class="send-sms-link" onclick="handleBtnClick(this, ${student.id}, ${isChecked ? 'true' : 'false'})">📤</a>
+                <!-- Fixed Dynamic Trigger Link -->
+                <a id="btn-${student.id}-${dateKey}" href="#" class="send-sms-link" onclick="handleBtnClick(this, ${student.id}, '${dateKey}')">📤</a>
               </div>
             </td>`;
         }
@@ -75,7 +74,7 @@
       });
     }
 
-    // --- Dynamic Link Generation ---
+    // --- Dynamic Text Builder ---
     function getSmsUrl(student, isPresent) {
       const message = isPresent 
         ? `Your child ${student.name} came to school today. Thanks for sending your child!`
@@ -88,11 +87,10 @@
       return `sms:${cleanPhone}${parameterSeparator}body=${encodeURIComponent(message)}`;
     }
 
-    // --- Triggers when Checkbox changes state ---
+    // --- Fires instantly when box state is updated ---
     function handleCheckboxChange(checkbox, studentId, dateKey) {
       const isChecked = checkbox.checked;
       
-      // Update data locally
       students = students.map(student => {
         if (student.id === studentId) {
           if (!student.attendance) student.attendance = {};
@@ -102,24 +100,25 @@
       });
       localStorage.setItem('nativeStudents', JSON.stringify(students));
 
-      // Locate the physical button next to this checkbox
       const sendBtn = document.getElementById(`btn-${studentId}-${dateKey}`);
       if (sendBtn) {
         const student = students.find(s => s.id === studentId);
-        const targetSmsUrl = getSmsUrl(student, isChecked);
         
-        // 1. Assign the dynamically typed message URL to our button
-        sendBtn.href = targetSmsUrl;
+        // 1. Inject the correctly calculated real-time message text
+        sendBtn.href = getSmsUrl(student, isChecked);
         
-        // 2. Automatically trigger the button click in the background!
+        // 2. Perform the system click
         sendBtn.click();
       }
     }
 
-    // --- Backup Click Handler if they tap the icon manually ---
-    function handleBtnClick(anchor, studentId, isCurrentlyChecked) {
+    // --- Double Check System reading the checkbox directly on click ---
+    function handleBtnClick(anchor, studentId, dateKey) {
+      const checkbox = document.getElementById(`cb-${studentId}-${dateKey}`);
+      const isLiveChecked = checkbox ? checkbox.checked : false;
       const student = students.find(s => s.id === studentId);
-      anchor.href = getSmsUrl(student, isCurrentlyChecked);
+      
+      anchor.href = getSmsUrl(student, isLiveChecked);
     }
 
     function openModal() { studentModal.classList.remove('hidden'); }
